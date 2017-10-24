@@ -87,10 +87,9 @@ private:
     int32_t setSensorSupportedPicSize();
     uint8_t checkScaleSizeTable(uint8_t scale_cnt, cam_dimension_t *scale_tbl, uint8_t org_cnt, cam_dimension_t *org_tbl);
 
-    QCameraParameters *mParent;
+    QCameraParameters (__unused *mParent);
     bool mScaleEnabled;
     bool mIsUnderScaling;   //if in scale status
-    bool mScaleDirection;   // 0: Upscaling; 1: Downscaling
 
     // picture size cnt that need scale operation
     uint8_t mNeedScaleCnt;
@@ -287,7 +286,6 @@ public:
     // Auto HDR supported
     static const char KEY_QC_AUTO_HDR_SUPPORTED[];
 
-
     // Values for Touch AF/AEC
     static const char TOUCH_AF_AEC_OFF[];
     static const char TOUCH_AF_AEC_ON[];
@@ -298,7 +296,6 @@ public:
     static const char SCENE_MODE_FLOWERS[];
     static const char SCENE_MODE_AR[];
     static const char SCENE_MODE_HDR[];
-
     static const char PIXEL_FORMAT_YUV420SP_ADRENO[]; // ADRENO
     static const char PIXEL_FORMAT_YV12[]; // NV12
     static const char PIXEL_FORMAT_NV12[]; //NV12
@@ -480,10 +477,6 @@ public:
     static const char FLIP_MODE_H[];
     static const char FLIP_MODE_VH[];
 
-    // Values missing in nougat
-    static const char FOCUS_MODE_MANUAL_POSITION[];
-    static const char WHITE_BALANCE_MANUAL_CCT[];
-
     //Values for CDS Mode
     static const char CDS_MODE_OFF[];
     static const char CDS_MODE_ON[];
@@ -642,6 +635,12 @@ public:
     bool isAdvCamFeaturesEnabled() {return isUbiFocusEnabled() ||
         isChromaFlashEnabled() || isOptiZoomEnabled() || isHDREnabled();}
     int32_t setIntEvent(cam_int_evt_params_t params);
+    void setPrvwExpTime(float expTimeReal);
+    int getPrvwExpTime();
+    uint32_t getCameraId();
+    bool is60HzAntibanding();
+    uint32_t getHfrMode();
+    bool getAppRecordingHint();
 
 private:
     int32_t setPreviewSize(const QCameraParameters& );
@@ -715,6 +714,7 @@ private:
     int32_t setMobicat(const QCameraParameters& params);
     bool UpdateHFRFrameRate(const QCameraParameters& params);
     int32_t setLongshotParam(const QCameraParameters& params);
+
     int32_t setAutoExposure(const char *autoExp);
     int32_t setPreviewFpsRange(int min_fps,int max_fps,
             int vid_min_fps,int vid_max_fps);
@@ -887,7 +887,11 @@ private:
     bool m_bAeBracketingEnabled;
     int32_t mFlashValue;
     int32_t mFlashDaemonValue;
-
+    float mPrvwExpTimeReal;
+    bool m_bIsManualIso;
+    int32_t mManualExpTimeUs;
+    bool m_bIs60HzAntibanding;
+    bool m_bAppRecordingHint;
 };
 
 }; // namespace qcamera

@@ -9,7 +9,7 @@ LOCAL_PATH := $(OMX_CORE_PATH)
 LOCAL_MODULE_TAGS := optional
 
 omx_core_defines:= -Werror \
-                   -g -O0
+                   -g -O3
 
 LOCAL_CFLAGS := $(omx_core_defines)
 
@@ -21,6 +21,7 @@ LOCAL_C_INCLUDES += $(LOCAL_PATH)/../qexif
 LOCAL_SRC_FILES := qomx_core.c
 
 LOCAL_MODULE           := libqomx_core
+LOCAL_32_BIT_ONLY := true
 LOCAL_PRELINK_MODULE   := false
 LOCAL_SHARED_LIBRARIES := libcutils libdl
 
